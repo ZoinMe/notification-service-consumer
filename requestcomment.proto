@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package consumer;
+
+option go_package = "/proto;proto";
+
+// Define the Request message
+message Request {
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 team_id = 3;
+    string status = 4;
+}
+
+// Define the Comment message
+message Comment {
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 team_id = 3;
+    string text = 4;
+    int64 parent_id = 5;  // use int64 to represent optional parent_id
+}
+
+// Define the InsertRequest message
+message InsertRequest {
+    Request request = 1;
+}
+
+// Define the InsertComment message
+message InsertComment {
+    Comment comment = 1;
+}
+
+// Define the InsertResponse message
+message InsertResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// Define the RequestCommentService service
+service RequestCommentService {
+    rpc CreateRequest(InsertRequest) returns (InsertResponse);
+    rpc CreateComment(InsertComment) returns (InsertResponse);
+}
